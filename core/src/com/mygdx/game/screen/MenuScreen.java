@@ -25,7 +25,6 @@ public class MenuScreen extends BaseScreen {
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         touch = new Vector2();
-
         v = new Vector2(0.6f,0.6f);
         pos = new Vector2();
 
