@@ -3,8 +3,10 @@ package com.mygdx.game.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public abstract class BaseScreen implements Screen, InputProcessor {
+
     @Override
     public void show() {
         System.out.println("show");

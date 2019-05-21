@@ -1,23 +1,25 @@
 package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
+
     private SpriteBatch batch;
     private Texture img;
+    OrthographicCamera camera;
 
     private Vector2 touch;
     private Vector2 v;
     private Vector2 pos;
     private float topBorder;
     private float rightBorder;
-
 
     @Override
     public void show() {
@@ -27,7 +29,6 @@ public class MenuScreen extends BaseScreen {
         touch = new Vector2();
         v = new Vector2(0.6f,0.6f);
         pos = new Vector2();
-
     }
 
     @Override
@@ -48,7 +49,18 @@ public class MenuScreen extends BaseScreen {
             v.set(-0.6f, -0.6f);
             pos.add(v);
         }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT));//нажатие по кнопкам
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT));
+        if(Gdx.input.isKeyPressed(Input.Keys.UP));
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN));
+
+        if (pos.x < 0) pos.x = 0; // ограничение по экрану
+        if (pos.y < 0) pos.y = 0;
+
     }
+
+
 
     @Override
     public void dispose() {
@@ -61,6 +73,7 @@ public class MenuScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
         touch.set(screenX, Gdx.graphics.getHeight() - screenY);
+
         System.out.println("touch.x = " + touch.x + " touch.y = " + touch.y);
         return false;
     }
