@@ -27,7 +27,6 @@ public class MenuScreen extends BaseScreen {
         background = new Background(new TextureRegion(bg));
         badLogicTexture = new Texture("Batman_Arkham_Knight.jpg");
         badLogic = new BadLogic(new TextureRegion(badLogicTexture));
-
     }
 
     private void update(float delta) {
