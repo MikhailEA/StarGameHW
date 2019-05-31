@@ -1,7 +1,8 @@
 package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -26,10 +27,19 @@ public class GameScreen extends BaseScreen {
     private MainShip mainShip;
     private BulletPool bulletPool;
 
+    private Sound soundBullet;
+    private Sound soundExplosion;
+    private Sound soundLaser;
+    private Music music;
 
     @Override
     public void show() {
         super.show();
+        this.soundBullet = Gdx.audio.newSound(Gdx.files.internal("bullet.wav")); // добавление звуковых эффектов
+        this.soundExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
+        this.soundLaser = Gdx.audio.newSound(Gdx.files.internal("laser.wav"));
+        this.music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
@@ -39,6 +49,11 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool = new BulletPool();
         mainShip = new MainShip(atlas, bulletPool);
+
+        this.music.setLooping(true);
+        this.music.play();
+
+
     }
 
     @Override
@@ -85,10 +100,17 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        soundLaser.dispose();
+        soundBullet.dispose();
+        soundExplosion.dispose();
+        music.dispose();
+
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
         super.dispose();
+
+
     }
 
     @Override

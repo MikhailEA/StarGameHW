@@ -1,6 +1,7 @@
 package com.mygdx.game.sprite;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -27,6 +28,8 @@ public class MainShip extends Sprite {
 
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
+
+    protected Sound bulletSound;
 
 
 
@@ -150,6 +153,7 @@ public class MainShip extends Sprite {
         bulletPos.set(pos);
         bulletPos.y += getHalfHeight();
         bullet.set(this, bulletRegion, bulletPos, bulletV, 0.01f, worldBounds, 1);
+        if(bulletSound.play() == -1) throw new RuntimeException();
     }
 
     private void moveLeft() {
