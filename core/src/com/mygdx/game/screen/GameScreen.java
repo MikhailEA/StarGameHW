@@ -14,10 +14,13 @@ import com.mygdx.game.pool.BulletPool;
 import com.mygdx.game.pool.EnemyPool;
 import com.mygdx.game.pool.ExplosionPool;
 import com.mygdx.game.sprite.Background;
+import com.mygdx.game.sprite.Enemy;
 import com.mygdx.game.sprite.Explosion;
 import com.mygdx.game.sprite.MainShip;
 import com.mygdx.game.sprite.Star;
 import com.mygdx.game.utils.EnemyGenerator;
+
+import java.util.List;
 
 public class GameScreen extends BaseScreen {
 
@@ -59,7 +62,7 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas, explosionSound);
-        enemyPool = new EnemyPool(bulletPool, bulletSound, worldBounds);
+        enemyPool = new EnemyPool(bulletPool, bulletSound, worldBounds, explosionPool, mainShip);
         mainShip = new MainShip(atlas, bulletPool, laserSound);
         enemyGenerator = new EnemyGenerator(worldBounds, enemyPool, atlas);
     }
@@ -141,8 +144,6 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         mainShip.touchDown(touch, pointer);
-        Explosion explosion = explosionPool.obtain();
-        explosion.set(0.1f, touch);
         return false;
     }
 
@@ -150,5 +151,20 @@ public class GameScreen extends BaseScreen {
     public boolean touchUp(Vector2 touch, int pointer) {
         mainShip.touchUp(touch, pointer);
         return false;
+    }
+
+    public void theClashOfShips() {
+        List<Enemy> enemyList = enemyPool.getActiveObjects();
+        for(Enemy enemy : enemyList) {
+            if (enemy.isDestroyed()) {
+                continue;
+            }
+            float minDist = enemy.getHalfWidth() + mainShip.getHalfWidth();
+            if(enemy.pos.dst2(mainShip.pos) < minDist * minDist) {
+                enemy.bang();
+                return;
+            }
+        }
+
     }
 }
