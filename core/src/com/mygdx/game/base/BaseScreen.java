@@ -19,8 +19,8 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     private Vector2 touch;
 
     private Rect screenBounds;
-    private Rect worldBounds;
-    private Rect glBounnds;
+    protected Rect worldBounds;
+    private Rect glBounds;
 
     private Matrix4 worldToGl;
     private Matrix3 screenToWorld;
@@ -34,7 +34,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         this.touch = new Vector2();
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
-        this.glBounnds = new Rect(0,0,1f,1f);
+        this.glBounds = new Rect(0,0,1f,1f);
         this.worldToGl = new Matrix4();
         this.screenToWorld = new Matrix3();
 
@@ -55,7 +55,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         float aspect = width / (float)height;
         worldBounds.setHeight(1f);
         worldBounds.setWidth(1f * aspect);
-        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounnds);
+        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
         batch.setProjectionMatrix(worldToGl);
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
         resize(worldBounds);
