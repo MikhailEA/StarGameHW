@@ -28,7 +28,6 @@ public class Enemy extends Ship {
         this.mainShip = mainShip;
     }
 
-
     @Override
     public void update(float delta) {
         super.update(delta);
