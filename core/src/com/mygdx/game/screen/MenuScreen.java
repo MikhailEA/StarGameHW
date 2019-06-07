@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.base.ActionListener;
 import com.mygdx.game.base.BaseScreen;
 
 import com.mygdx.game.math.Rect;
@@ -16,7 +17,8 @@ import com.mygdx.game.sprite.ButtonPlay;
 import com.mygdx.game.sprite.Star;
 
 
-public class MenuScreen extends BaseScreen {
+
+public class MenuScreen extends BaseScreen implements ActionListener {
 
     private static final int STAR_COUNT = 256;
 
@@ -45,8 +47,11 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++){
             starArray[i] = new Star(atlas);
         }
-        buttonExit = new ButtonExit(atlas);
-        buttonPlay = new ButtonPlay(atlas, game);
+        buttonExit = new ButtonExit(atlas, this);
+        buttonExit.setHeightProportion(0.15f);
+        buttonPlay = new ButtonPlay(atlas, this);
+        buttonPlay.setHeightProportion(0.2f);
+
     }
 
     @Override
@@ -104,5 +109,10 @@ public class MenuScreen extends BaseScreen {
         buttonExit.touchUp(touch, pointer);
         buttonPlay.touchUp(touch, pointer);
         return false;
+    }
+
+    @Override
+    public void actionPerformed(Object obj) {
+
     }
 }

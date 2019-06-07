@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.base.ScaledTouchUpButton;
 import com.mygdx.game.math.Rect;
+import com.mygdx.game.screen.MenuScreen;
+
+import java.awt.event.ActionListener;
 
 public class ButtonExit extends ScaledTouchUpButton {
 
-    public ButtonExit(TextureAtlas atlas) {
-        super(atlas.findRegion("btExit"));
+    public ButtonExit(TextureAtlas atlas, MenuScreen actionListener) {
+        super(atlas.findRegion("btExit"), actionListener, 0.5f);
         setHeightProportion(0.18f);
     }
 
@@ -19,7 +22,7 @@ public class ButtonExit extends ScaledTouchUpButton {
     }
 
     @Override
-    public void action() {
-        Gdx.app.exit();
+    public void actionPerformed(Object obj) {
+
     }
 }

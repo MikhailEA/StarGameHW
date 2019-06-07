@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.math.Rect;
 import com.mygdx.game.utils.Regions;
 
-public class Sprite extends Rect {
+public abstract class Sprite extends Rect {
 
     protected float angle;
     protected float scale = 1f;
@@ -87,4 +87,6 @@ public class Sprite extends Rect {
     public void destroy() {
         isDestroyed = true;
     }
+
+    public abstract void actionPerformed(Object obj);
 }

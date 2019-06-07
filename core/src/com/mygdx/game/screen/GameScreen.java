@@ -1,5 +1,6 @@
 package com.mygdx.game.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.base.ActionListener;
 import com.mygdx.game.base.BaseScreen;
 import com.mygdx.game.math.Rect;
 import com.mygdx.game.pool.BulletPool;
@@ -15,8 +17,8 @@ import com.mygdx.game.pool.EnemyPool;
 import com.mygdx.game.pool.ExplosionPool;
 import com.mygdx.game.sprite.Background;
 import com.mygdx.game.sprite.Bullet;
+import com.mygdx.game.sprite.ButtonNewGame;
 import com.mygdx.game.sprite.Enemy;
-import com.mygdx.game.sprite.Explosion;
 import com.mygdx.game.sprite.MainShip;
 import com.mygdx.game.sprite.MessageGameOver;
 import com.mygdx.game.sprite.Star;
@@ -24,11 +26,15 @@ import com.mygdx.game.utils.EnemyGenerator;
 
 import java.util.List;
 
-import javax.swing.plaf.nimbus.State;
 
-public class GameScreen extends BaseScreen {
+
+public class GameScreen extends BaseScreen implements ActionListener {
 
     private static final int STAR_COUNT = 64;
+
+    public GameScreen(Game game) {
+        super();
+    }
 
     private enum State { PLAYING, PAUSE, GAME_OVER }
 
@@ -53,6 +59,7 @@ public class GameScreen extends BaseScreen {
     private EnemyGenerator enemyGenerator;
 
     private MessageGameOver messageGameOver;
+    private ButtonNewGame buttonNewGame;
 
     @Override
     public void show() {
@@ -76,7 +83,10 @@ public class GameScreen extends BaseScreen {
         enemyPool = new EnemyPool(bulletPool, explosionPool, bulletSound, worldBounds, mainShip);
         enemyGenerator = new EnemyGenerator(worldBounds, enemyPool, atlas);
         messageGameOver = new MessageGameOver(atlas);
+        buttonNewGame = new ButtonNewGame(atlas, this);
         state = State.PLAYING;
+
+
     }
 
     @Override
@@ -181,6 +191,7 @@ public class GameScreen extends BaseScreen {
             enemyPool.drawActiveSprites(batch);
         } else if (state == State.GAME_OVER) {
             messageGameOver.draw(batch);
+            buttonNewGame.draw(batch);
         }
         batch.end();
     }
@@ -228,6 +239,7 @@ public class GameScreen extends BaseScreen {
     public boolean touchDown(Vector2 touch, int pointer) {
         if (state == State.PLAYING) {
             mainShip.touchDown(touch, pointer);
+            buttonNewGame.touchDown(touch, pointer);
         }
         return false;
     }
@@ -236,7 +248,13 @@ public class GameScreen extends BaseScreen {
     public boolean touchUp(Vector2 touch, int pointer) {
         if (state == State.PLAYING) {
             mainShip.touchUp(touch, pointer);
+            buttonNewGame.touchUp(touch, pointer);
         }
         return false;
+    }
+
+    @Override
+    public void actionPerformed(Object obj) {
+
     }
 }
