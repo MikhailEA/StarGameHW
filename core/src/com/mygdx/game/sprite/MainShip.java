@@ -12,6 +12,8 @@ public class MainShip extends Ship {
 
     private static final int INVALID_POINTER = -1;
 
+    private static final int HP = 100;
+
     private boolean pressedLeft;
     private boolean pressedRight;
 
@@ -30,7 +32,13 @@ public class MainShip extends Ship {
         this.bulletHeight = 0.01f;
         this.damage = 1;
         this.bulletSound = bulletSound;
-        this.hp = 10;
+        this.hp = HP;
+    }
+
+    public void startNewGame() {
+        this.hp = HP;
+        this.pos.x = worldBounds.pos.x;
+        flushDestroy();
     }
 
     @Override
@@ -144,6 +152,16 @@ public class MainShip extends Ship {
         );
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        pressedLeft = false;
+        pressedRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        stop();
+    }
+
     private void moveRight() {
         v.set(v0);
     }
@@ -155,4 +173,5 @@ public class MainShip extends Ship {
     private void stop() {
         v.setZero();
     }
+
 }
