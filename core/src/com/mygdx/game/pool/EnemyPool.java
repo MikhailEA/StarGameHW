@@ -14,7 +14,6 @@ public class EnemyPool extends SpritesPool<Enemy> {
     private Rect worldBounds;
     private MainShip mainShip;
 
-
     public EnemyPool(BulletPool bulletPool, ExplosionPool explosionPool, Sound bulletSound, Rect worldBounds, MainShip mainShip) {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
